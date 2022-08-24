@@ -38,3 +38,5 @@ return top of the stack
 Attempted division by zero results in an error message in the calculator line. The history above this line keeps the expression which caused this error.
 
 <img src="https://user-images.githubusercontent.com/72036926/186427164-9fba72fe-bd45-40d3-b0fd-b5816a941545.png" width="600"/>
+
+In case of mismatch parentheses, the program adds left parentheses to the very left or right parentheses to the very right of the input line, so that the number of parentheses matches and the expression can be evaluated. This can of course affect the result. I do not handle this in any direct way, but the user can check a their last calculation in the history line above the input/result line.
