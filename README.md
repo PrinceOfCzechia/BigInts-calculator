@@ -4,21 +4,21 @@ A calculator built on arithmetics of BigInt type objects defined in my repositor
 
 This calculator implements arithmetic operations (integer addition, subtraction, multiplication, division and powering) on custom type [BigInt](https://github.com/PrinceOfCzechia/BigInts-library). This allows for such operations, as adding *1* to the maximum size of *long long int* and getting a reasonable answer, as is presented in the enclosed image.
 
-<img src="https://user-images.githubusercontent.com/72036926/186395384-a9c65216-aed6-416f-ac45-86b036f5de42.png" width="400" height="600"/>
+<img src="https://user-images.githubusercontent.com/72036926/186395384-a9c65216-aed6-416f-ac45-86b036f5de42.png" height="600"/>
 
 ## How it works?
 
 The key components of this calculator are functions inside the file *eval.cpp*. In the following paragraphs, I will briefly describe them:
 
-**tokenize**
+### tokenize
 
 This function gets a *std::string* as its input and returns a *vector* of *string*s, which contains numbers and operators as separate element. Spaces and other unwanted characters are discarded.
 
-**infix2RPN**
+### infix2RPN
 
 This one converts a *vector* of tokens in infix form to a *vector* of those same tokens, but in such order, that they now form a postfix expression. This is achieved via an implementation of Dijkstra's [shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting_yard_algorithm).
 
-**evalRPN**
+### evalRPN
 
 Here, the reverse polish notation vector is evaluated. The algorithm goes as follows
 
