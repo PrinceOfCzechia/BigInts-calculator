@@ -36,3 +36,5 @@ return top of the stack
 
 ## Exception handling
 Attempted division by zero results in an error message in the calculator line. The history above this line keeps the expression which caused this error.
+
+<img src="https://user-images.githubusercontent.com/72036926/186427164-9fba72fe-bd45-40d3-b0fd-b5816a941545.png" width="600"/>
