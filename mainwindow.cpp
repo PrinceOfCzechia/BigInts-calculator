@@ -1,9 +1,6 @@
-#include "mainwindow.h"
 #include <iostream>
-#include <stack>
-#include <vector>
-
-unsigned openBracketCount = 0;
+#include "mainwindow.h"
+#include "eval.cpp"
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -107,16 +104,11 @@ void MainWindow::on_powerButton_clicked()
 void MainWindow::on_buttonLP_clicked()
 {
     ui->lineEdit->setText(ui->lineEdit->text().append("("));
-    openBracketCount++;
 }
 
 void MainWindow::on_buttonRP_clicked()
 {
-    if(openBracketCount!=0)
-    {
-        ui->lineEdit->setText(ui->lineEdit->text().append(")"));
-        openBracketCount--;
-    }
+    ui->lineEdit->setText(ui->lineEdit->text().append(")"));
 }
 
 void MainWindow::on_clcButton_clicked()
@@ -128,11 +120,32 @@ void MainWindow::on_clcButton_clicked()
 // auxiliary functions for evalButton
 void MainWindow::closeBrackets()
 {
-    for(unsigned i=openBracketCount; i>0; i--)
+    QString temp;
+    unsigned lb = 0;
+    unsigned rb = 0;
+    for(QChar c: ui->lineEdit->text())
     {
-        ui->lineEdit->setText(ui->lineEdit->text().append(")"));
+        if(c=='(') lb++;
+        if(c==')') rb++;
     }
-    openBracketCount=0;
+    int balance = lb - rb;
+    if(balance>0)
+    {
+        for(int i=0; i<balance; i++)
+        {
+            temp+=")";
+        }
+        ui->lineEdit->setText(ui->lineEdit->text()+temp);
+    }
+    else
+    {
+        for(int i=0; i>balance; i--)
+        {
+            temp+="(";
+        }
+        ui->lineEdit->setText(temp+ui->lineEdit->text());
+    }
+
 }
 
 void MainWindow::refreshHistory()
@@ -140,29 +153,25 @@ void MainWindow::refreshHistory()
     ui->historyLabel->setText(ui->lineEdit->text().append("="));
 }
 
-QString MainWindow::binarize(QString input)
-{
-    QString output;
-    //
-    // add zeros so that unary minuses become binary
-    // without chnaging the expression's value
-    //
-    return output;
-}
-
-// transforming the user-friendly infix string
-// into a computer-friendly postfix (RPN) string
-QString MainWindow::infix2RPN(QString input)
-{
-    QString output;
-    // define stack
-    // shunting yard algorithm
-    return output;
-}
-
 // here comes the calculation itself
 void MainWindow::on_evalButton_clicked()
 {
-    this->closeBrackets();
+    // measures before computing the result
     this->refreshHistory();
+    this->closeBrackets();
+    try{
+        // getting the input from lineEdit, making it work with unary operators
+        string binaryInput = unaryPrep(this->ui->lineEdit->text().toStdString());
+        // tokenization
+        vector<string> tokens = tokenize(binaryInput);
+        // rearranging tokens to reverse polish (postfix) order
+        vector<string> RPN = ::infix2RPN(tokens, opMap);
+        // evaluating the RPN tokens
+        string result = evalRPN(RPN);
+        this->ui->lineEdit->setText(QString::fromStdString(result));
+    }
+    catch(std::exception &e)
+    {
+        this->ui->lineEdit->setText("ERROR: invalid input");
+    }
 }

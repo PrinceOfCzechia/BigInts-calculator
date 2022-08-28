@@ -31,16 +31,6 @@ Charray::Charray(unsigned long n)
     this->setNum((n-(n%aux))/aux,9);
 }
 
-Charray::Charray(char arr[])
-{
-    this->fillWithZeros();
-    unsigned length = strlen(arr);
-    for(unsigned i = 0; i<length; i++)
-    {
-        this->setNum(arr[length-1-i]-'0',i);
-    }
-}
-
 Charray::Charray(std::string text)
 {
     this->fillWithZeros();
@@ -69,28 +59,6 @@ void Charray::setNum(unsigned n, unsigned i)
 char Charray::getNum(unsigned i)
 {
     return this->array[i];
-}
-
-void Charray::print(std::ostream &out)
-{
-    for(unsigned i=0; i<N; i++)
-    {
-        out<<this->getNum(N-i-1);
-    }
-    out<<std::endl;
-}
-
-void Charray::printShort(std::ostream& out)
-{
-    bool virgin = 1;
-    for(unsigned i=0; i<N; i++)
-    {
-        char aux = this->getNum(N-i-1);
-        if(aux!='0') virgin = 0;
-        if(!virgin) out<<aux;
-    }
-    if(virgin) out<<'0';
-    out<<std::endl;
 }
 
 std::string Charray::shortString()

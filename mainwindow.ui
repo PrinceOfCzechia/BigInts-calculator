@@ -36,12 +36,20 @@
      </font>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:15pt; font-weight:700; font-style:normal;&quot;&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
     </property>
     <property name="styleSheet">
      <string notr="true">color:rgb(240,240,240);
-align=&quot;right&quot;
-font: 18pt &quot;Segoe UI&quot;;</string>
+text-align=&quot;right&quot;
+font: 18pt &quot;Segoe UI&quot;;
+align=&quot;right&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonOne">
@@ -480,6 +488,9 @@ font: 700 12pt &quot;Segoe UI&quot;;</string>
       <height>30</height>
      </size>
     </property>
+    <property name="shortcut">
+     <string>Return</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="buttonLP">
     <property name="geometry">
@@ -497,8 +508,8 @@ font: 700 12pt &quot;Segoe UI&quot;;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#303030;
-color:rgb(230,230,230);</string>
+     <string notr="true">background-color: rgb(230, 160, 0);
+color: rgb(0,0,0)</string>
     </property>
     <property name="text">
      <string>(</string>
@@ -526,8 +537,8 @@ color:rgb(230,230,230);</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#303030;
-color:rgb(230,230,230);</string>
+     <string notr="true">background-color: rgb(230, 160, 0);
+color: rgb(0,0,0)</string>
     </property>
     <property name="text">
      <string>)</string>
@@ -554,6 +565,9 @@ color:rgb(230,230,230);</string>
       <bold>true</bold>
      </font>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(180, 100, 5);
 color:rgb(0,0,0);</string>
@@ -566,6 +580,9 @@ color:rgb(0,0,0);</string>
       <width>30</width>
       <height>30</height>
      </size>
+    </property>
+    <property name="shortcut">
+     <string>Ctrl+Backspace</string>
     </property>
    </widget>
    <widget class="QPushButton" name="powerButton">
@@ -584,8 +601,8 @@ color:rgb(0,0,0);</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:#303030;
-color:rgb(230,230,230);</string>
+     <string notr="true">background-color: rgb(230, 160, 0);
+color: rgb(0,0,0)</string>
     </property>
     <property name="text">
      <string>^</string>

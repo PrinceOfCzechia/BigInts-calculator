@@ -18,6 +18,7 @@ unordered_map<char, int> opMap
     {'*',2},
     {'/',2},
     {'^',3},
+    {'u',3},
     {'(',0},
     {')',0}
 };
@@ -28,20 +29,46 @@ bool isOperator(char c)
     return 0;
 }
 
+string unaryPrep(string input)
+{
+    string output;
+    bool isPrecededByOperator=1;
+    for(unsigned i=0; i<input.length(); i++)
+    {
+        if(isPrecededByOperator && input[i]=='-')
+        {
+            output.append("u");
+            isPrecededByOperator=0;
+        }
+        else
+        {
+            output.append(string(1,input[i]));
+        }
+        if(isOperator(input[i])) isPrecededByOperator=1;
+
+    }
+    return output;
+}
+
 vector<string> tokenize(string input)
 {
+    if(input=="") throw std::exception();
     vector<string> tokens;
     string temp = "";
     for(char c : input)
     {
-        if(isdigit(c)) temp+=c;
-        if(isOperator(c))
+        if(isdigit(c) | c=='u')
+        {
+            temp+=c;
+        }
+        else if(isOperator(c))
         {
             if(temp!="") tokens.push_back(temp);
             temp="";
             tokens.push_back(string(1,c));
         }
-        else continue;
+        else if(c==' '){}
+        else throw std::exception();
     }
     if(temp!="") tokens.push_back(temp); // empty the rest of the input after operators if there is something to empty
     return tokens;
@@ -53,7 +80,7 @@ vector<string> infix2RPN(vector<string>infix, unordered_map<char, int> opMap)
     stack<char> opStack;
     for(string token : infix)
     {
-        if(isdigit(token[0])) RPN.push_back(token); // if the token is a number, push it to the output;
+        if(isdigit(token[0]) | token[0]=='u') RPN.push_back(token); // if the token is a number, push it to the output;
         if(isOperator(token[0])) // if the token is an opertor, do the shunting yard algorithm
         {
             if(token=="(") opStack.push(token[0]);
@@ -77,7 +104,7 @@ vector<string> infix2RPN(vector<string>infix, unordered_map<char, int> opMap)
             }
         }
     }
-    while(!opStack.empty()) // empty the operator stack into the output vector
+    while(!opStack.empty())
     {
         RPN.push_back(string(1, opStack.top()));
         opStack.pop();
@@ -92,11 +119,17 @@ std::string evalRPN(vector<string> RPN)
     BigInt temp2;
     for(string s : RPN)
     {
-        if(isOperator(s[0]))
+        if(s[0]=='u')
         {
+            evalStack.push(BigInt(s));
+        }
+        else if(isOperator(s[0]))
+        {
+            if(evalStack.empty()) throw std::exception();
             temp1=BigInt(evalStack.top());
             std::cout << temp1;
             evalStack.pop();
+            if(evalStack.empty()) throw std::exception();
             temp2=BigInt(evalStack.top());
             std::cout << temp2;
             evalStack.pop();
@@ -106,11 +139,18 @@ std::string evalRPN(vector<string> RPN)
             else if (s=="^") evalStack.push(temp2^temp1);
             else if (s=="/")
             {
-                evalStack.push(temp2/temp1);
+                try
+                {
+                    evalStack.push(temp2/temp1);
+                }
+                catch (BigIntException &e)
+                {
+                    return("ERROR: division by zero");
+                }
             }
             // one of the cases certainly happened, since parentheses are not allowed anymore
         }
-        else evalStack.push(BigInt(s)); // std::stoi, convert string to int since c++11
+        else evalStack.push(BigInt(s));
     }
     std::cout << evalStack.top();
     return evalStack.top().shortString();

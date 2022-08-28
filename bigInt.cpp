@@ -15,23 +15,18 @@ BigInt::BigInt(long val)
     sgn = (val>=0 ? 1 : 0);
 }
 
-BigInt::BigInt(char array[], bool sign)
-{
-    abs = BigUnsgnd(array);
-    sgn = sign;
-}
-
 BigInt::BigInt(std::string text)
 {
-    if(text[0]=='-') this->setSgn(0);
-    else this->setSgn(1);
-    this->setAbs(BigUnsgnd(text));
-}
-
-BigInt::BigInt(Charray val, bool sign)
-{
-    abs = BigUnsgnd(val);
-    sgn = sign;
+    if(text[0]=='-' | text[0]=='u')
+    {
+        this->setSgn(0);
+        this->setAbs(BigUnsgnd(text.erase(0,1)));
+    }
+    else
+    {
+        this->setSgn(1);
+        this->setAbs(BigUnsgnd(text));
+    }
 }
 
 BigInt::BigInt(BigUnsgnd val, bool sign)
@@ -42,19 +37,7 @@ BigInt::BigInt(BigUnsgnd val, bool sign)
 
 BigInt::~BigInt(){}
 
-void BigInt::print()
-{
-    this->sgn==1 ? std::cout<<"+" : std::cout<<"-";
-    this->abs.print();
-}
-
-void BigInt::printShort()
-{
-    this->sgn==1 ? std::cout<<'+' : std::cout<<'-';
-    this->abs.printShort();
-}
-
-std::string BigInt::shortString() // new
+std::string BigInt::shortString() // new function
 {
     std::string output = "";
     if(*this<BigInt()) output.append("-");
@@ -265,13 +248,15 @@ BigInt BigInt::operator^(unsigned q)
     return power(*this,q);
 }
 
+
+// !!!!! WHAT IF b<0
 BigInt BigInt::operator^(BigInt b)
 {
     if(b==BigInt()) return BigInt(1);
-    BigInt result = b;
-    for(BigInt i=1; i<b; i=i+1)
+    BigInt result = *this;
+    for(BigInt i=BigInt(1); i<b; i=i+1)
     {
-        result=result*b;
+        result=*this*result;
     }
     return result;
 }

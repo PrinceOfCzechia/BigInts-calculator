@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QShortcut>
 #include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -48,7 +49,9 @@ private:
     // auxiliary functions for input evalutaion
     void closeBrackets();
     void refreshHistory();
+    bool isUnaryMinus(char minus);
     QString binarize(QString input);
+    QString addTimes(QString ipnut);
     QString infix2RPN(QString input);
 };
 #endif // MAINWINDOW_H

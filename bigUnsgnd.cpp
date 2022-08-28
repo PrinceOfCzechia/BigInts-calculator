@@ -12,32 +12,12 @@ BigUnsgnd::BigUnsgnd(unsigned long value)
     this->digits = Charray(value);
 }
 
-BigUnsgnd::BigUnsgnd(char arr[])
-{
-    this->digits=arr;
-}
-
-BigUnsgnd::BigUnsgnd(Charray values)
-{
-    this->digits = values;
-}
-
 BigUnsgnd::BigUnsgnd(std::string text)
 {
     this->digits = Charray(text);
 }
 
 BigUnsgnd::~BigUnsgnd(){}
-
-void BigUnsgnd::print()
-{
-    this->digits.print();
-}
-
-void BigUnsgnd::printShort()
-{
-    this->digits.printShort();
-}
 
 std::string BigUnsgnd::shortString()
 {
