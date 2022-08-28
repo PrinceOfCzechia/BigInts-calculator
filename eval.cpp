@@ -29,6 +29,12 @@ bool isOperator(char c)
     return 0;
 }
 
+string firstUnary(string input)
+{
+    string output=(input[0]=='-' ? "0"+input : input);
+    return output;
+}
+
 string unaryPrep(string input)
 {
     string output;
@@ -79,7 +85,10 @@ vector<string> infix2RPN(vector<string>infix, unordered_map<char, int> opMap)
     stack<char> opStack;
     for(string token : infix)
     {
-        if(isdigit(token[0]) | token[0]=='u') RPN.push_back(token); // if the token is a number, push it to the output;
+        if(isdigit(token[0]) | token[0]=='u')
+        {
+            RPN.push_back(token); // if the token is a number, push it to the output;
+        }
         if(isOperator(token[0])) // if the token is an opertor, do the shunting yard algorithm
         {
             if(token=="(") opStack.push(token[0]);

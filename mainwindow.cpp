@@ -161,11 +161,17 @@ void MainWindow::on_evalButton_clicked()
     this->closeBrackets();
     try{
         // getting the input from lineEdit, making it work with unary operators
-        string binaryInput = unaryPrep(this->ui->lineEdit->text().toStdString());
+        string input = firstUnary(this->ui->lineEdit->text().toStdString());
+        string binaryInput = unaryPrep(input);
+        std::cout<<binaryInput<<std::endl;
         // tokenization
         vector<string> tokens = tokenize(binaryInput);
+        for(string s:tokens)
+            std::cout<<"token: " <<s<<std::endl;
         // rearranging tokens to reverse polish (postfix) order
         vector<string> RPN = ::infix2RPN(tokens, opMap);
+        for(string s:RPN)
+            std::cout<<s;
         // evaluating the RPN tokens
         string result = evalRPN(RPN);
         this->ui->lineEdit->setText(QString::fromStdString(result));
