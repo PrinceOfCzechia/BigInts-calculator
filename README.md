@@ -12,6 +12,9 @@ Currently, the app employs two hotkeys, *enter* for *'='* button and *ctrl+backs
 
 The algorithmically key components of this calculator are functions inside the file *eval.cpp*. In the following paragraphs, I will briefly describe them:
 
+### firstUnary
+If the first character of an input is a minus sign, this function returns a *string*, where the input is appended to a *0*.
+
 ### unaryPrep
 
 Before tokenizing, this function adds *'u'* instead of unary minuses, in this case those, which are preceded by another operator in their respective strings. These *'u'* characters are then used in a *BigInt* constructor which takes them as a hint to construct a negative number, i.e. a *BigInt* with *sgn* property set to *0*.
