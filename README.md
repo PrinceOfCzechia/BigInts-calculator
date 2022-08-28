@@ -6,7 +6,7 @@ This calculator implements arithmetic operations (integer addition, subtraction,
 
 <img align="center" src="https://user-images.githubusercontent.com/72036926/186395384-a9c65216-aed6-416f-ac45-86b036f5de42.png" height="500"/>
 
-Currently, the app employs two hotkeys, enter for *'='* button and *ctrl+backspace* for clear button.
+Currently, the app employs two hotkeys, *enter* for *'='* button and *ctrl+backspace* for clear button.
 
 ## How it works?
 
