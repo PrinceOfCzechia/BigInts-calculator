@@ -38,14 +38,13 @@ string unaryPrep(string input)
         if(isPrecededByOperator && input[i]=='-')
         {
             output.append("u");
-            isPrecededByOperator=0;
         }
         else
         {
             output.append(string(1,input[i]));
         }
+        isPrecededByOperator=0;
         if(isOperator(input[i])) isPrecededByOperator=1;
-
     }
     return output;
 }
