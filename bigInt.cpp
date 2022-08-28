@@ -222,7 +222,6 @@ BigInt modulo(BigInt a, BigInt b)
     result.setSgn(a.getSgn());
     return result;
 }
-
 BigInt BigInt::operator%(BigInt b)
 {
     return modulo(*this,b);
@@ -230,7 +229,6 @@ BigInt BigInt::operator%(BigInt b)
 */
 
 // POWER functionality and overloaded OPERATOR
-// positive integer powering is implemented
 
 BigInt power(BigInt b, unsigned q)
 {
@@ -248,8 +246,6 @@ BigInt BigInt::operator^(unsigned q)
     return power(*this,q);
 }
 
-
-// !!!!! WHAT IF b<0
 BigInt BigInt::operator^(BigInt b)
 {
     if(b==BigInt()) return BigInt(1);
