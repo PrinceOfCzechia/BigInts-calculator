@@ -5,6 +5,7 @@
 #include <cmath>
 #include "bigInt.h"
 #include "bigIntExcpt.h"
+#include "evalExcpt.h"
 
 using std::string;
 using std::vector;
@@ -18,7 +19,7 @@ unordered_map<char, int> opMap
     {'*',2},
     {'/',2},
     {'^',3},
-    {'u',3},
+    {'u',3}, // 4?
     {'(',0},
     {')',0}
 };
@@ -57,12 +58,12 @@ string unaryPrep(string input)
 
 vector<string> tokenize(string input)
 {
-    if(input=="") throw std::exception();
+    if(input=="") throw EvalException("ERROR: invalid input"); // add exception class or enum
     vector<string> tokens;
     string temp = "";
     for(char c : input)
     {
-        if(isdigit(c) | c=='u')
+        if(isdigit(c) || c=='u')
         {
             temp+=c;
         }
@@ -73,7 +74,7 @@ vector<string> tokenize(string input)
             tokens.push_back(string(1,c));
         }
         else if(c==' '){}
-        else throw std::exception();
+        else throw EvalException("ERROR: invalid input");
     }
     if(temp!="") tokens.push_back(temp); // empty the rest of the input after operators if there is something to empty
     return tokens;
@@ -85,7 +86,7 @@ vector<string> infix2RPN(vector<string>infix, unordered_map<char, int> opMap)
     stack<char> opStack;
     for(string token : infix)
     {
-        if(isdigit(token[0]) | token[0]=='u')
+        if(isdigit(token[0]) || token[0]=='u')
         {
             RPN.push_back(token); // if the token is a number, push it to the output;
         }
@@ -133,13 +134,13 @@ std::string evalRPN(vector<string> RPN)
         }
         else if(isOperator(s[0]))
         {
-            if(evalStack.empty()) throw std::exception();
+            if(evalStack.empty()) throw EvalException("ERROR: invalid input");
             temp1=BigInt(evalStack.top());
-            std::cout << temp1;
+            // std::cout << temp1;
             evalStack.pop();
-            if(evalStack.empty()) throw std::exception();
+            if(evalStack.empty()) throw EvalException("ERROR: invalid input");
             temp2=BigInt(evalStack.top());
-            std::cout << temp2;
+            // std::cout << temp2;
             evalStack.pop();
             if(s=="+") evalStack.push(temp2+temp1); // note that the order of temp1 and temp2 is switched
             else if (s=="-") evalStack.push(temp2-temp1);

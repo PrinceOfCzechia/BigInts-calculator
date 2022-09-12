@@ -1,6 +1,7 @@
 #include <iostream>
 #include "mainwindow.h"
 #include "eval.cpp"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -116,6 +117,11 @@ void MainWindow::on_clcButton_clicked()
     ui->lineEdit->setText("");
 }
 
+void MainWindow::on_additionalButton_clicked()
+{
+    QMessageBox::information(this, "MainWindow", "text");
+}
+
 
 // auxiliary functions for evalButton
 void MainWindow::closeBrackets()
@@ -163,21 +169,26 @@ void MainWindow::on_evalButton_clicked()
         // getting the input from lineEdit, making it work with unary operators
         string input = firstUnary(this->ui->lineEdit->text().toStdString());
         string binaryInput = unaryPrep(input);
-        std::cout<<binaryInput<<std::endl;
+        std::cout << binaryInput << std::endl;
         // tokenization
         vector<string> tokens = tokenize(binaryInput);
         for(string s:tokens)
-            std::cout<<"token: " <<s<<std::endl;
+            std::cout<<"token: " << s << std::endl;
         // rearranging tokens to reverse polish (postfix) order
         vector<string> RPN = ::infix2RPN(tokens, opMap);
         for(string s:RPN)
-            std::cout<<s;
+            std::cout << s;
+        std::cout<<std::endl;
         // evaluating the RPN tokens
         string result = evalRPN(RPN);
         this->ui->lineEdit->setText(QString::fromStdString(result));
     }
-    catch(std::exception &e)
+    catch(EvalException &e)
     {
-        this->ui->lineEdit->setText("ERROR: invalid input");
+        this->ui->lineEdit->setText(e.what());
+    }
+    catch(...)
+    {
+        this->ui->lineEdit->setText("ERROR: unknown error");
     }
 }

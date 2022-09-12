@@ -11,7 +11,7 @@ public:
     BigIntException(std::string msg): message(msg){}
     virtual const char* what() const noexcept
     {
-        return message.c_str();
+        return this->message.c_str();
     }
 };
 
