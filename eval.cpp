@@ -19,7 +19,7 @@ unordered_map<char, int> opMap
     {'*',2},
     {'/',2},
     {'^',3},
-    {'u',3}, // 4?
+    {'u',4},
     {'(',0},
     {')',0}
 };
@@ -130,7 +130,8 @@ std::string evalRPN(vector<string> RPN)
     {
         if(s[0]=='u')
         {
-            evalStack.push(BigInt(s));
+            if(s.erase(0,1)!="") evalStack.push(BigInt(s));
+            else throw EvalException("ERROR: invalid input");
         }
         else if(isOperator(s[0]))
         {
